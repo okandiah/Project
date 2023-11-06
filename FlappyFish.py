@@ -23,3 +23,5 @@ screen = pygame.display.set_mode(width_screen, height_screen)
 #Adding a score (counter) 
 
 #Replay game after loss
+
+#test2
