@@ -15,11 +15,11 @@ def main_screen():
     background = pygame.image.load('gamebackground.png')
     #Main Screen
     # opens up a window
-    screen = pygame.display.set_mode(res)
+    screen = pygame.display.set_mode(size)
     screen.blit(background, (0,0))
 
 # white color
-color = (0, 0, 0)
+    color = (0, 0, 0)
 
     # light shade of the button
     color_light = (255, 215, 0)
@@ -32,7 +32,7 @@ color = (0, 0, 0)
 
 # rendering a text written in
 # this font
-text = smallfont.render('PLAY', True, color)
+    text = smallfont.render('PLAY', True, color)
 
     while True:
 
@@ -76,11 +76,11 @@ text = smallfont.render('PLAY', True, color)
             pygame.draw.rect(screen, color_dark, [button_x, button_y, button_width, button_height])
 
     # superimposing the text onto our button
-    screen.blit(text, (button_x + 65, button_y + 20))
+        screen.blit(text, (button_x + 65, button_y + 20))
 
         # updates the frames of the game
         pygame.display.update()
-
+main_screen()
 
 #Main/ Starting Screen code
     #Button to show rules, button to start game
