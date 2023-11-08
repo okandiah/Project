@@ -18,7 +18,7 @@ screen = pygame.display.set_mode(res)
 screen.blit(background, (0,0))
 
 # white color
-color = (255, 255, 255)
+color = (0, 0, 0)
 
 # light shade of the button
 color_light = (255, 215, 0)
@@ -31,7 +31,7 @@ smallfont = pygame.font.SysFont('Corbel', 35)
 
 # rendering a text written in
 # this font
-text = smallfont.render('quit', True, color)
+text = smallfont.render('PLAY', True, color)
 
 while True:
 
@@ -75,7 +75,7 @@ while True:
         pygame.draw.rect(screen, color_dark, [button_x, button_y, button_width, button_height])
 
     # superimposing the text onto our button
-    screen.blit(text, (button_x + 70, button_y + 15))
+    screen.blit(text, (button_x + 65, button_y + 20))
 
     # updates the frames of the game
     pygame.display.update()
