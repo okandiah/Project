@@ -14,14 +14,13 @@ width = 800
 height = 600
 
 background = pygame.image.load('seabackground.png')
-
+run=True
 # opens up a window
 screen = pygame.display.set_mode(size)
 screen.blit(background, (0, 0))
 
 
 def play_screen():
-    run = True
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 4
@@ -79,10 +78,12 @@ def main_screen():
                 button_height = 70
                 button_x = (width - button_width) // 2
                 button_y = (height - button_height) // 2
-
+                run=False
                 if button_x <= mouse[0] <= button_x + button_width and button_y <= mouse[1] <= button_y + button_height:
+                    run=True
                     play_screen()
                 else:
+                    run =False
                     sys.exit()
 
         # fills the screen with a color
