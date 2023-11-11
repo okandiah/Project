@@ -76,8 +76,11 @@ def play_screen():
 
 
 def main_screen():
-    # white color
+    # Black color
     color = (0, 0, 0)
+
+    #title color
+    title_colour = (124, 252, 0)
 
     # light shade of the button
     color_light = (255, 215, 0)
@@ -87,10 +90,18 @@ def main_screen():
 
     # defining a font
     smallfont = pygame.font.SysFont('Corbel', 35)
+    instructionfont = pygame.font.SysFont('Corbel', 30)
+    #titlefont
 
     # rendering a text written in
     # this font
     text = smallfont.render('PLAY', True, color)
+
+    itext = instructionfont.render('INSTRUCTIONS', True, color)
+
+    titlefont = pygame.font.Font('waterpark.ttf', 120)
+    title = titlefont.render("Swimmy Fish", True, title_colour)
+    screen.blit(title, (40,40))
 
     while True:
 
@@ -121,31 +132,43 @@ def main_screen():
         # fills the screen with a color
         # screen.fill((60, 25, 60))
 
-        # Calculate the position of the button based on screen width and height
-        button_width = 200
-        button_height = 70
+        # Calculate the position of the instructions button based on screen width and height
+        ibutton_width = 220
+        ibutton_height = 80
+        ibutton_x = (width - ibutton_width) // 2
+        ibutton_y = (height - ibutton_height) // 2
+
+        # Calculate the position of the play button based on screen width and height
+        button_width = 220
+        button_height = 80
         button_x = (width - button_width) // 2
-        button_y = (height - button_height) // 2
+        button_y = (height - button_height) // 1.5
 
         # stores the (x, y) coordinates into
         # the variable as a tuple
         mouse = pygame.mouse.get_pos()
 
-        # if mouse is hovered on a button it
+        # if mouse is hovered on play button
         # changes to a lighter shade
         if button_x <= mouse[0] <= button_x + button_width and button_y <= mouse[1] <= button_y + button_height:
             pygame.draw.rect(screen, color_light, [button_x, button_y, button_width, button_height])
         else:
             pygame.draw.rect(screen, color_dark, [button_x, button_y, button_width, button_height])
 
+        # if mouse is hovered on instructions button 
+        if ibutton_x <= mouse[0] <= ibutton_x + ibutton_width and ibutton_y <= mouse[1] <= ibutton_y + ibutton_height:
+            pygame.draw.rect(screen, color_light, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
+        else:
+            pygame.draw.rect(screen, color_dark, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
+
         # superimposing the text onto our button
-        screen.blit(text, (button_x + 65, button_y + 20))
+        screen.blit(text, (button_x + 75, button_y + 25))
+
+        screen.blit(itext, (ibutton_x + 15, ibutton_y + 25))
 
         # updates the frames of the game
         pygame.display.update()
 
-
-main_screen()
 
 # Call main_screen() to start the game
 main_screen()
