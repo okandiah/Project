@@ -9,11 +9,11 @@ timer = pygame.time.Clock()
 fps = 60
 
 # screen size
-size = (1024, 768)
-width = 1024
-height = 768
+size = (800, 600)
+width = 800
+height = 600
 
-background = pygame.image.load('gamebackground.png')
+background = pygame.image.load('seabackground.png')
 
 # opens up a window
 screen = pygame.display.set_mode(size)
@@ -22,14 +22,14 @@ screen.blit(background, (0, 0))
 
 def play_screen():
     run = True
-    background2 = pygame.image.load('gamebackground.png')
+    background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 4
 
     while run:
         timer.tick(fps)
         screen.blit(background, (0, 0))
-        screen.blit(background2, (background_scroll, 768))
+        screen.blit(background2, (background_scroll, 600))
         background_scroll -= scroll_speed
 
         if abs(background_scroll) > 35:
