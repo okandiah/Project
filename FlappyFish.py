@@ -14,24 +14,25 @@ width = 800
 height = 600
 
 background = pygame.image.load('seabackground.png')
-run=True
+run = True
 # opens up a window
 screen = pygame.display.set_mode(size)
 screen.blit(background, (0, 0))
 
+
 class Fishy(pygame.sprite.Sprite):
-    def __init__self(self,x,y):
+    def __init__(self, x, y):  # Fix: Corrected the typo here
         pygame.sprite.Sprite.__init__(self)
-        self.images =[]
-        self.index =0
-        self.counter=0
-        for num in range(1,4):
-            fishy=pygame.image.load(f'fishy{num}.png')
+        self.images = []
+        self.index = 0
+        self.counter = 0
+        for num in range(1, 4):
+            fishy = pygame.image.load(f'fishy{num}.png')
             self.images.append(fishy)
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
-    
+
     def update(self):
         self.counter += 1
         swim_cooldown = 5
@@ -43,10 +44,9 @@ class Fishy(pygame.sprite.Sprite):
                 self.index = 0
         self.image = self.images[self.index]
 
+
 fishy_group = pygame.sprite.Group()
-
-swimmy = Fishy(50, height)
-
+swimmy = Fishy(100, height/2)
 fishy_group.add(swimmy)
 
 
@@ -59,8 +59,8 @@ def play_screen():
         timer.tick(fps)
         screen.blit(background, (0, 0))
         fishy_group.draw(screen)
-        fishy_group.draw.update()
-        screen.blit(background2, (background_scroll,250))
+        fishy_group.update()  # Fix: Corrected the method name here
+        screen.blit(background2, (background_scroll, 250))
         background_scroll -= scroll_speed
 
         if abs(background_scroll) > 35:
@@ -145,6 +145,9 @@ def main_screen():
         pygame.display.update()
 
 
+main_screen()
+
+# Call main_screen() to start the game
 main_screen()
 
 #moving_game_screen()
