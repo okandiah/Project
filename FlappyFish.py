@@ -19,6 +19,15 @@ run=True
 screen = pygame.display.set_mode(size)
 screen.blit(background, (0, 0))
 
+class Fishy(pygame.sprite.Sprite):
+    def __init__self(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.iamge =[]
+        self.index =0
+        self.counter=0
+        for num in range(1,4):
+            image=pygame.image.load()
+
 
 def play_screen():
     background2 = pygame.image.load('sandbackground.png')
