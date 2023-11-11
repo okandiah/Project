@@ -22,11 +22,32 @@ screen.blit(background, (0, 0))
 class Fishy(pygame.sprite.Sprite):
     def __init__self(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.iamge =[]
+        self.images =[]
         self.index =0
         self.counter=0
         for num in range(1,4):
-            image=pygame.image.load()
+            fishy=pygame.image.load(f'fishy{num}.png')
+            self.images.append(fishy)
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = [x, y]
+    
+    def update(self):
+        self.counter += 1
+        swim_cooldown = 5
+
+        if self.counter > swim_cooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.images):
+                self.index = 0
+        self.image = self.images[self.index]
+
+fishy_group = pygame.sprite.Group()
+
+swimmy = Fishy(50, height)
+
+fishy_group.add(swimmy)
 
 
 def play_screen():
@@ -37,6 +58,8 @@ def play_screen():
     while run:
         timer.tick(fps)
         screen.blit(background, (0, 0))
+        fishy_group.draw(screen)
+        fishy_group.draw.update()
         screen.blit(background2, (background_scroll,250))
         background_scroll -= scroll_speed
 
