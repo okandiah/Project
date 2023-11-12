@@ -10,8 +10,8 @@ fps = 50
 game_over= False
 swimming = False
 
-obstacle_gap = 150
-obstacle_frequency = 1500
+obstacle_gap = 300
+obstacle_frequency = 1300
 last_obstacle = pygame.time.get_ticks() - obstacle_frequency
 scroll_speed = 2
 
@@ -93,7 +93,7 @@ fishy_group.add(swimmy)
 
 
 def play_screen():
-    global run, swimming, game_over  # Declare run as global
+    global run, swimming, game_over, last_obstacle  # Declare run as global
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 2
@@ -102,7 +102,9 @@ def play_screen():
         timer.tick(fps)
         screen.blit(background, (0, 0))
         fishy_group.draw(screen)
+        obstacle_group.draw(screen)
         fishy_group.update()
+        obstacle_group.update()
         screen.blit(background2, (background_scroll, 250))
         background_scroll -= scroll_speed
 
@@ -137,9 +139,9 @@ def play_screen():
                 obstacle_group.add(top_obstacle)
                 last_obstacle = time_now
 
-                ground_scroll -= scroll_speed
-                if abs(ground_scroll) > 35:
-                    ground_scroll = 0
+                background_scroll -= scroll_speed
+                if abs(background_scroll) > 35:
+                    background_scroll = 0
                     obstacle_group.update()
 
         for event in pygame.event.get():
