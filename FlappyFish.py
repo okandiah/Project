@@ -109,7 +109,7 @@ def play_screen():
         background_scroll -= scroll_speed
 
         #look for collisions 
-        if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or flappy.rect.top<0:
+        if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or swimmy.rect.top<0:
             game_over = True
         #has fish hit top
         if fishy_group.sprites()[0].rect.top <=-30:
