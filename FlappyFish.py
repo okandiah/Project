@@ -129,7 +129,7 @@ def play_screen():
 
         if game_over== False and swimming == True:
             time_now = pygame.time.get_ticks()
-            if time_now - last_obstacle>obstacle_frequency:
+            if (time_now - last_obstacle) > obstacle_frequency:
                 obstacle_height = random.randint(-100,100)
                 bottom_obstacle = obstacles(width, int(height/2)+ obstacle_height, -1)
                 top_obstacle = obstacles(width, int(height/2)+ obstacle_height, 1)
