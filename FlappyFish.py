@@ -69,7 +69,7 @@ class Fishy(pygame.sprite.Sprite):
 class obstacles(pygame.sprite.Sprite):
     def __init__(self,x,y,position):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load()
+        self.image = pygame.image.load('pipe.png')
         self.rect = self.image.get_rect()
 
         if position == 1:
@@ -91,8 +91,6 @@ swimmy = Fishy(100, height/2)
 
 fishy_group.add(swimmy)
 
-
-# ... (your existing code)
 
 def play_screen():
     global run, swimming, game_over  # Declare run as global
