@@ -10,6 +10,11 @@ fps = 50
 game_over= False
 swimming = False
 
+obstacle_gap = 150
+obstacle_frequency = 1500
+last_obstacle = pygame.time.get_ticks() - obstacle_frequency
+scroll_speed = 2
+
 # screen size
 size = (800, 600)
 width = 800
@@ -61,9 +66,29 @@ class Fishy(pygame.sprite.Sprite):
             #rotate bird
             self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
 
+class obstacles(pygame.sprite.Sprite):
+    def __init__(self,x,y,position):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load()
+        self.rect = self.image.get_rect()
+
+        if position == 1:
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect.bottomleft = [x,y - int(obstacle_gap/2)]
+        if position == -1:
+            self.rect.topleft = [x,y + int(obstacle_gap/2)]
+    
+    def update(self):
+        self.rect.x -= scroll_speed
+        if self.rect.right < 0:
+            self.kill()
+
 
 fishy_group = pygame.sprite.Group()
+obstacle_group = pygame.sprite.Group()
+
 swimmy = Fishy(100, height/2)
+
 fishy_group.add(swimmy)
 
 
@@ -82,6 +107,10 @@ def play_screen():
         fishy_group.update()
         screen.blit(background2, (background_scroll, 250))
         background_scroll -= scroll_speed
+
+        #look for collisions 
+        if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or flappy.rect.top<0:
+            game_over = True
         #has fish hit top
         if fishy_group.sprites()[0].rect.top <=-30:
             fishy_group.sprites()[0].rect.bottom = height
@@ -92,13 +121,28 @@ def play_screen():
         else:
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
+        
+        #new obstacles
         if pygame.mouse.get_pressed()[0] == 1 and swimmy.clicked==False:
             fishy_group.sprites()[0].clicked = True
             fishy_group.sprites()[0].vel = -10
         if pygame.mouse.get_pressed()[0] == 0:
             fishy_group.sprites()[0].clicked = False
-        if abs(background_scroll) > 35:
-            background_scroll = 0
+
+        if game_over== False and swimming == True:
+            time_now = pygame.time.get_ticks()
+            if time_now - last_obstacle>obstacle_frequency:
+                obstacle_height = random.randint(-100,100)
+                bottom_obstacle = obstacles(width, int(height/2)+ obstacle_height, -1)
+                top_obstacle = obstacles(width, int(height/2)+ obstacle_height, 1)
+                obstacle_group.add(bottom_obstacle)
+                obstacle_group.add(top_obstacle)
+                last_obstacle = time_now
+
+                ground_scroll -= scroll_speed
+                if abs(ground_scroll) > 35:
+                    ground_scroll = 0
+                    obstacle_group.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
