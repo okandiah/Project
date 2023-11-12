@@ -38,17 +38,15 @@ class Fishy(pygame.sprite.Sprite):
         self.clicked=False
 
     def update(self):
-        self.vel +=0.5
-        self.vel += 0.5
-        if self.vel > 8:
-            self.bel=8
-        if self.rect.bottom < 545:
-            self.rect.y += int(self.vel)
-        if pygame.mouse.get_pressed()[0] == 1 and self.clicked==False:
-            self.clicked = True
-            self.vel = -10
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
+        if swimming == True:
+            #jump fishy
+            self.vel +=0.5
+            if self.vel > 8:
+                self.vel=8
+        else:
+            self.vel += 0.5
+            if self.vel<8:
+                self.vel=8
 
 			#handle the animation
         self.counter += 1
@@ -61,7 +59,7 @@ class Fishy(pygame.sprite.Sprite):
                 self.index = 0
                 self.image = self.images[self.index]
             #rotate bird
-        self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
+            self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
 
 
 fishy_group = pygame.sprite.Group()
@@ -72,26 +70,43 @@ fishy_group.add(swimmy)
 # ... (your existing code)
 
 def play_screen():
-    global run  # Declare run as global
+    global run, swimming, game_over  # Declare run as global
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 2
 
-    while run:
+    while run and not game_over:
         timer.tick(fps)
         screen.blit(background, (0, 0))
         fishy_group.draw(screen)
         fishy_group.update()
         screen.blit(background2, (background_scroll, 250))
         background_scroll -= scroll_speed
-
+        #has fish hit top
+        if fishy_group.sprites()[0].rect.top <=-30:
+            fishy_group.sprites()[0].rect.top = height
+            game_over = True
+        #has fish hit ground 
+        if fishy_group.sprites()[0].rect.bottom < height:
+            fishy_group.sprites()[0].rect.y += int(fishy_group.sprites()[0].vel)
+        else:
+            fishy_group.sprites()[0].rect.bottom = height
+            game_over = True
+        if pygame.mouse.get_pressed()[0] == 1 and swimmy.clicked==False:
+            fishy_group.sprites()[0].clicked = True
+            fishy_group.sprites()[0].vel = -10
+        if pygame.mouse.get_pressed()[0] == 0:
+            fishy_group.sprites()[0].clicked = False
         if abs(background_scroll) > 35:
             background_scroll = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                run = False
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and swimming == False and game_over == False:
+                swimming = True
 
         pygame.display.update()
 
