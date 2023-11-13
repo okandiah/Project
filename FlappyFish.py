@@ -105,7 +105,7 @@ def play_screen():
         obstacle_group.draw(screen)
         fishy_group.update()
         obstacle_group.update()
-        screen.blit(background2, (background_scroll, 250))
+        screen.blit(background2, (background_scroll, 475))
         background_scroll -= scroll_speed
 
         #look for collisions 
@@ -116,7 +116,7 @@ def play_screen():
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
         #has fish hit ground 
-        if fishy_group.sprites()[0].rect.bottom < height:
+        if fishy_group.sprites()[0].rect.bottom < (height - 75):
             fishy_group.sprites()[0].rect.y += int(fishy_group.sprites()[0].vel)
         else:
             fishy_group.sprites()[0].rect.bottom = height
