@@ -9,6 +9,8 @@ timer = pygame.time.Clock()
 fps = 50
 game_over= False
 swimming = False
+score = 0
+pass_obstacle = False
 
 obstacle_gap = 300
 obstacle_frequency = 1300
@@ -93,7 +95,7 @@ fishy_group.add(swimmy)
 
 
 def play_screen():
-    global run, swimming, game_over, last_obstacle  # Declare run as global
+    global run, swimming, game_over, last_obstacle, pass_obstacle, score  # Declare run as global
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 2
@@ -105,8 +107,24 @@ def play_screen():
         obstacle_group.draw(screen)
         fishy_group.update()
         obstacle_group.update()
+
+        #draw the ground
         screen.blit(background2, (background_scroll, 475))
         background_scroll -= scroll_speed
+
+        #check the score
+        if len(obstacle_group)>0:
+            if fishy_group.sprites()[0].rect.right >= obstacle_group.sprites()[0].rect.left and fishy_group.sprites()[0].rect.left <= obstacle_group.sprites()[0].rect.right and not pass_obstacle:
+                pass_obstacle = True
+                score +=1
+            if pass_obstacle == True and fishy_group.sprites()[0].rect.left> obstacle_group.sprites()[0].rect.right:
+                pass_obstacle = False
+        
+        #display score
+        color = (255, 100 ,2)
+        smallfont = pygame.font.SysFont('Corbel', 50)
+        score_text = smallfont.render(str(score), True, color)
+        screen.blit(score_text,(int(width/2),20))
 
         #look for collisions 
         if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or swimmy.rect.top<0:
@@ -138,11 +156,11 @@ def play_screen():
                 obstacle_group.add(bottom_obstacle)
                 obstacle_group.add(top_obstacle)
                 last_obstacle = time_now
-
                 background_scroll -= scroll_speed
                 if abs(background_scroll) > 35:
                     background_scroll = 0
                     obstacle_group.update()
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
