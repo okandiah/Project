@@ -1,10 +1,15 @@
+#Ovia Kandiah and Anoushka Saha
+
+#Importing needed modules
 import pygame
 from pygame.locals import *
 import random
 import sys
 
+#initializing modules
 pygame.init()
 
+#defining variables
 timer = pygame.time.Clock()
 fps = 50
 game_over= False
@@ -28,23 +33,27 @@ run = True
 screen = pygame.display.set_mode(size)
 screen.blit(background, (0, 0))
 
-
+#defining a class for the fish
 class Fishy(pygame.sprite.Sprite):
-    def __init__(self, x, y):  # Fix: Corrected the typo here
+    #__init___ initializes the attributes of an object when it is formed
+    def __init__(self, x, y):  
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         self.index = 0
         self.counter = 0
         for num in range(1, 4):
+            #4 images of fish being imported then added to list
             fishy = pygame.image.load(f'fishy{num}.png')
             self.images.append(fishy)
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
+        #positioning of the fish using get_rect()
         self.rect.center = [x, y]
         self.vel=0
         self.clicked=False
 
     def update(self):
+        #defining the gravity and motion of the fish
         if swimming == True:
             #jump fishy
             self.vel +=0.5
@@ -55,7 +64,6 @@ class Fishy(pygame.sprite.Sprite):
             if self.vel<8:
                 self.vel=8
 
-			#handle the animation
         self.counter += 1
         swim_cooldown = 5
             
@@ -68,12 +76,14 @@ class Fishy(pygame.sprite.Sprite):
             #rotate bird
             self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
 
+#defining the obstacles
 class obstacles(pygame.sprite.Sprite):
     def __init__(self,x,y,position):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('pipe.png')
         self.rect = self.image.get_rect()
 
+        #positioning
         if position == 1:
             self.image = pygame.transform.flip(self.image, False, True)
             self.rect.bottomleft = [x,y - int(obstacle_gap/2)]
@@ -95,12 +105,13 @@ fishy_group.add(swimmy)
 
 
 def play_screen():
-    global run, swimming, game_over, last_obstacle, pass_obstacle, score  # Declare run as global
+    global run, swimming, game_over, last_obstacle, pass_obstacle, score  #Ensure variables are available in each function by declaring as global
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 2
 
     while run and not game_over:
+        #create the necessary graphics for when the game is running
         timer.tick(fps)
         screen.blit(background, (0, 0))
         fishy_group.draw(screen)
@@ -173,7 +184,8 @@ def play_screen():
         pygame.display.update()
 
 def main_screen():
-    global run  # Declare run as global
+    global run  
+    #graphics of main screen
     color = (0, 0, 0)
     title_colour = (124, 252, 0)
     color_light = (255, 215, 0)
@@ -192,7 +204,7 @@ def main_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+            #creating buttons
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
                 button_width = 200
@@ -203,7 +215,7 @@ def main_screen():
                 if button_x <= mouse[0] <= button_x + button_width and button_y <= mouse[1] <= button_y + button_height:
                     run = True
                     play_screen()
-
+        #sizing of buttons
         ibutton_width = 220
         ibutton_height = 80
         ibutton_x = (width - ibutton_width) // 2
