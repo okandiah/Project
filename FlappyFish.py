@@ -253,17 +253,7 @@ def main_screen():
         ibutton_x = (width - ibutton_width) // 2
         ibutton_y = (height - ibutton_height) // 2
 
-        button_width = 220
-        button_height = 80
-        button_x = (width - button_width) // 2
-        button_y = (height - button_height) // 1.5
-
         mouse = pygame.mouse.get_pos()
-
-        if button_x <= mouse[0] <= button_x + button_width and button_y <= mouse[1] <= button_y + button_height:
-            pygame.draw.rect(screen, color_light, [button_x, button_y, button_width, button_height])
-        else:
-            pygame.draw.rect(screen, color_dark, [button_x, button_y, button_width, button_height])
 
         if ibutton_x <= mouse[0] <= ibutton_x + ibutton_width and ibutton_y <= mouse[1] <= ibutton_y + ibutton_height:
             pygame.draw.rect(screen, color_light, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
