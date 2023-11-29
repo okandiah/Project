@@ -220,10 +220,10 @@ def main_screen():
     title_colour = (124, 252, 0)
     color_light = (255, 215, 0)
     color_dark = (255, 244, 0)
-    smallfont = pygame.font.SysFont('Corbel', 30)
+
     instructionfont = pygame.font.SysFont('Corbel', 35)
 
-    text = smallfont.render('INSTRUCTIONS', True, color)
+
     itext = instructionfont.render('PLAY', True, color)
     titlefont = pygame.font.Font('waterpark.ttf', 120)
     title = titlefont.render("Swimmy Fish", True, title_colour)
@@ -270,7 +270,7 @@ def main_screen():
         else:
             pygame.draw.rect(screen, color_dark, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
 
-        screen.blit(text, (button_x + 15, button_y + 25))
+        
         screen.blit(itext, (ibutton_x + 75, ibutton_y + 25))
 
         pygame.display.update()
