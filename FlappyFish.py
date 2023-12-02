@@ -38,8 +38,8 @@ screen = pygame.display.set_mode(size)
 screen.blit(background, (0, 0))
 
 ###############################################################################################
-# Class Name        : 
-# Class Parameter   : 
+# Class Name        : Fishy
+# Class Parameter   : pygame.sprite.Sprite
 # Class Returns     : 
 # Class Description : 
 
@@ -91,17 +91,19 @@ class Fishy(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
 
 ###############################################################################################
-# Class Name        : 
-# Class Parameter   : 
+# Class Name        : obstacles
+# Class Parameter   : pygame.sprite.Sprite
 # Class Returns     : 
 # Class Description : 
 class obstacles(pygame.sprite.Sprite):
+
+    # Initializing the pipe image as a sprite
     def __init__(self,x,y,position):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('pipe.png')
         self.rect = self.image.get_rect()
 
-        #positioning
+        # Positioning of pipes as obstacles with gaps in between
         if position == 1:
             self.image = pygame.transform.flip(self.image, False, True)
             self.rect.bottomleft = [x,y - int(obstacle_gap/2)]
@@ -122,13 +124,15 @@ swimmy = Fishy(100, height/2)
 fishy_group.add(swimmy)
 
 ###############################################################################################
-# Function Name        : 
-# Function Parameter   : 
+# Function Name        : play_screen()
+# Function Parameter   : None
 # Function Returns     : 
 # Function Description : 
 
 def play_screen():
-    global run, swimming, game_over, last_obstacle, pass_obstacle, score  #Ensure variables are available in each function by declaring as global
+
+    #Ensure variables are available in each function by declaring as global
+    global run, swimming, game_over, last_obstacle, pass_obstacle, score
     background2 = pygame.image.load('sandbackground.png')
     background_scroll = 0
     scroll_speed = 2
@@ -174,7 +178,7 @@ def play_screen():
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
         
-        # New obstacles
+    
         if pygame.mouse.get_pressed()[0] == 1 and swimmy.clicked==False:
             fishy_group.sprites()[0].clicked = True
             fishy_group.sprites()[0].vel = -10
@@ -207,8 +211,8 @@ def play_screen():
         pygame.display.update()
 
 ###############################################################################################
-# Function Name        : 
-# Function Parameter   : 
+# Function Name        : main_screen()
+# Function Parameter   : None
 # Function Returns     : 
 # Function Description : 
 
@@ -222,8 +226,6 @@ def main_screen():
     color_dark = (255, 244, 0)
 
     instructionfont = pygame.font.SysFont('Corbel', 35)
-
-
     itext = instructionfont.render('PLAY', True, color)
     titlefont = pygame.font.Font('waterpark.ttf', 120)
     title = titlefont.render("Swimmy Fish", True, title_colour)
