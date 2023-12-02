@@ -123,6 +123,21 @@ swimmy = Fishy(100, height/2)
 
 fishy_group.add(swimmy)
 
+def reset_game():
+    global swimming, game_over, last_obstacle, pass_obstacle, score, fishy_group, obstacle_group
+
+    swimming = False
+    game_over = False
+    last_obstacle = pygame.time.get_ticks() - obstacle_frequency
+    pass_obstacle = False
+    score = 0
+
+    # Clear existing sprite groups and recreate the fishy sprite
+    fishy_group.empty()
+    obstacle_group.empty()
+    swimmy = Fishy(100, height/2)
+    fishy_group.add(swimmy)
+
 ###############################################################################################
 # Function Name        : play_screen()
 # Function Parameter   : None
@@ -167,18 +182,23 @@ def play_screen():
         # Look for collisions 
         if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or swimmy.rect.top<0:
             game_over = True
+            reset_game()
+            main_screen()
         # Has fish hit top
         if fishy_group.sprites()[0].rect.top <=-30:
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
+            reset_game()
+            main_screen()
         # Has fish hit ground 
         if fishy_group.sprites()[0].rect.bottom < (height - 75):
             fishy_group.sprites()[0].rect.y += int(fishy_group.sprites()[0].vel)
         else:
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
+            reset_game()
+            main_screen()
         
-    
         if pygame.mouse.get_pressed()[0] == 1 and swimmy.clicked==False:
             fishy_group.sprites()[0].clicked = True
             fishy_group.sprites()[0].vel = -10
