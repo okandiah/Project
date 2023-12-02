@@ -255,45 +255,44 @@ def main_screen():
     color_light = (255, 215, 0)
     color_dark = (255, 244, 0)
 
-    instructionfont = pygame.font.SysFont('Corbel', 35)
-    itext = instructionfont.render('PLAY', True, color)
+    playfont = pygame.font.SysFont('Corbel', 35)
+    ptext = playfont.render('PLAY', True, color)
     titlefont = pygame.font.Font('waterpark.ttf', 120)
     title = titlefont.render("Swimmy Fish", True, title_colour)
     screen.blit(title, (40, 40))
 
+    # Sizing of buttons
+    ibutton_width = 220
+    ibutton_height = 80
+    ibutton_x = (width - ibutton_width) // 2
+    ibutton_y = (height - ibutton_height) // 2
+
     while True:
+        mouse = pygame.mouse.get_pos()
+
         for event in pygame.event.get():
+
+            # Checks if window is being closed
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            # Creating buttons
+            # If play button is clicked, play_screen() is called and the game starts
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
-                button_width = 200
-                button_height = 70
-                button_x = (width - button_width) // 2
-                button_y = (height - button_height) // 2
 
-                if button_x <= mouse[0] <= button_x + button_width and button_y <= mouse[1] <= button_y + button_height:
+                if ibutton_x <= mouse[0] <= ibutton_x + ibutton_width and ibutton_y <= mouse[1] <= ibutton_y + ibutton_height:
                     run = True
                     play_screen()
-       
-        # Sizing of buttons
-        ibutton_width = 220
-        ibutton_height = 80
-        ibutton_x = (width - ibutton_width) // 2
-        ibutton_y = (height - ibutton_height) // 2
 
-        mouse = pygame.mouse.get_pos()
-
+        # Drawing button and changing button color based on mouse hovering
         if ibutton_x <= mouse[0] <= ibutton_x + ibutton_width and ibutton_y <= mouse[1] <= ibutton_y + ibutton_height:
             pygame.draw.rect(screen, color_light, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
         else:
             pygame.draw.rect(screen, color_dark, [ibutton_x, ibutton_y, ibutton_width, ibutton_height])
 
-        
-        screen.blit(itext, (ibutton_x + 75, ibutton_y + 25))
+        # Displaying text on button
+        screen.blit(ptext, (ibutton_x + 75, ibutton_y + 25))
 
         pygame.display.update()
 
