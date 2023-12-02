@@ -261,7 +261,7 @@ def main_screen():
     title = titlefont.render("Swimmy Fish", True, title_colour)
     screen.blit(title, (40, 40))
 
-    # Sizing of buttons
+    # Sizing of button
     ibutton_width = 220
     ibutton_height = 80
     ibutton_x = (width - ibutton_width) // 2
@@ -279,8 +279,6 @@ def main_screen():
 
             # If play button is clicked, play_screen() is called and the game starts
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse = pygame.mouse.get_pos()
-
                 if ibutton_x <= mouse[0] <= ibutton_x + ibutton_width and ibutton_y <= mouse[1] <= ibutton_y + ibutton_height:
                     run = True
                     play_screen()
