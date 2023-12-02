@@ -40,8 +40,7 @@ screen.blit(background, (0, 0))
 ###############################################################################################
 # Class Name        : Fishy
 # Class Parameter   : pygame.sprite.Sprite
-# Class Returns     : 
-# Class Description : 
+# Class Description : Controls animation and graphics of fish character
 
 class Fishy(pygame.sprite.Sprite):
     # __init___ initializes the attributes of an object when it is formed
@@ -92,9 +91,9 @@ class Fishy(pygame.sprite.Sprite):
 
 ###############################################################################################
 # Class Name        : obstacles
-# Class Parameter   : pygame.sprite.Sprite
-# Class Returns     : 
-# Class Description : 
+# Class Parameter   : pygame.sprite.Sprite 
+# Class Description : Controls animation and graphics of pipe obstacles
+
 class obstacles(pygame.sprite.Sprite):
 
     # Initializing the pipe image as a sprite
@@ -123,6 +122,12 @@ swimmy = Fishy(100, height/2)
 
 fishy_group.add(swimmy)
 
+###############################################################################################
+# Function Name        : reset_game()
+# Function Parameter   : None
+# Function Returns     : None
+# Function Description : Clears all variables and sprite groups required to restart game
+
 def reset_game():
     global swimming, game_over, last_obstacle, pass_obstacle, score, fishy_group, obstacle_group
 
@@ -141,8 +146,8 @@ def reset_game():
 ###############################################################################################
 # Function Name        : play_screen()
 # Function Parameter   : None
-# Function Returns     : 
-# Function Description : 
+# Function Returns     : None
+# Function Description : Controls gameplay
 
 def play_screen():
 
@@ -153,6 +158,7 @@ def play_screen():
     scroll_speed = 2
 
     while run and not game_over:
+
         # Create the necessary graphics for when the game is running
         timer.tick(fps)
         screen.blit(background, (0, 0))
@@ -179,18 +185,20 @@ def play_screen():
         score_text = smallfont.render(str(score), True, color)
         screen.blit(score_text,(int(width/2),20))
 
-        # Look for collisions 
+        # If fish collides with pipe the game is over and can be replayed
         if pygame.sprite.groupcollide(fishy_group, obstacle_group, False, True) or swimmy.rect.top<0:
             game_over = True
             reset_game()
             main_screen()
-        # Has fish hit top
+
+        # If fish hits top border the game is over and can be replayed
         if fishy_group.sprites()[0].rect.top <=-30:
             fishy_group.sprites()[0].rect.bottom = height
             game_over = True
             reset_game()
             main_screen()
-        # Has fish hit ground 
+
+        # # If fish hits ground the game is over and can be replayed 
         if fishy_group.sprites()[0].rect.bottom < (height - 75):
             fishy_group.sprites()[0].rect.y += int(fishy_group.sprites()[0].vel)
         else:
@@ -199,12 +207,14 @@ def play_screen():
             reset_game()
             main_screen()
         
+        # Makes the fish jump when the mouse is clicked
         if pygame.mouse.get_pressed()[0] == 1 and swimmy.clicked==False:
             fishy_group.sprites()[0].clicked = True
             fishy_group.sprites()[0].vel = -10
         if pygame.mouse.get_pressed()[0] == 0:
             fishy_group.sprites()[0].clicked = False
 
+        # Adding obstacles specific intervals and random heights if the game is in play and the fish is swimming
         if game_over== False and swimming == True:
             time_now = pygame.time.get_ticks()
             if (time_now - last_obstacle) > obstacle_frequency:
@@ -219,7 +229,7 @@ def play_screen():
                     background_scroll = 0
                     obstacle_group.update()
 
-
+        # Checks if mouse is being clicked to play game or to exit game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -233,8 +243,8 @@ def play_screen():
 ###############################################################################################
 # Function Name        : main_screen()
 # Function Parameter   : None
-# Function Returns     : 
-# Function Description : 
+# Function Returns     : None
+# Function Description : Displays the home screen and button that starts the game
 
 def main_screen():
     global run  
