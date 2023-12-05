@@ -157,6 +157,7 @@ def play_screen():
     background_scroll = 0
     scroll_speed = 2
 
+    #game loop
     while run and not game_over:
 
         # Create the necessary graphics for when the game is running
@@ -229,7 +230,7 @@ def play_screen():
                     background_scroll = 0
                     obstacle_group.update()
 
-        # Checks if mouse is being clicked to play game or to exit game
+        # Checks if mouse is being clicked to play game or to exit game, overall allows user to exit
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -254,7 +255,7 @@ def main_screen():
     title_colour = (124, 252, 0)
     color_light = (255, 215, 0)
     color_dark = (255, 244, 0)
-
+    #importing fonts
     playfont = pygame.font.SysFont('Corbel', 35)
     ptext = playfont.render('PLAY', True, color)
     titlefont = pygame.font.Font('waterpark.ttf', 120)
@@ -267,6 +268,7 @@ def main_screen():
     ibutton_x = (width - ibutton_width) // 2
     ibutton_y = (height - ibutton_height) // 2
 
+    #While program runs it is checking mouse movement on main screen
     while True:
         mouse = pygame.mouse.get_pos()
 
