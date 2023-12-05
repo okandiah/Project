@@ -7,10 +7,12 @@
 import pygame
 from pygame.locals import *
 import random
-import sys
 
 # Initializing modules
 pygame.init()
+
+# Window name
+pygame.display.set_caption('Swimmy Fish')
 
 # Defining variables
 timer = pygame.time.Clock()
@@ -86,7 +88,7 @@ class Fishy(pygame.sprite.Sprite):
                 self.index = 0
                 self.image = self.images[self.index]
 
-            # Rotate bird
+            # Rotate fish
             self.image = pygame.transform.rotate(self.images[self.index], self.vel * -2)
 
 ###############################################################################################
@@ -119,7 +121,6 @@ fishy_group = pygame.sprite.Group()
 obstacle_group = pygame.sprite.Group()
 
 swimmy = Fishy(100, height/2)
-
 fishy_group.add(swimmy)
 
 ###############################################################################################
