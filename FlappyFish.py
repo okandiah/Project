@@ -69,8 +69,10 @@ class Fishy(pygame.sprite.Sprite):
         # Defining the gravity and motion of the fish
         if swimming == True:
 
-            # Jump fishy
+            # Jump fishy, adding 0.5 to velocity to make sure the fish accelerates
             self.vel +=0.5
+
+            # Limits velocity to 8, so speed is reasonable
             if self.vel > 8:
                 self.vel=8
         else:
